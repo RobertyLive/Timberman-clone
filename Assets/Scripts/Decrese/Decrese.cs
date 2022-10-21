@@ -28,8 +28,9 @@ public class Decrese : MonoBehaviour
             int i = 0;
             do
             {
-                spawnSetup.woods.Remove(player.obj);
+                //spawnSetup.woods.Remove(player.obj);
                 transform.position -= new Vector3(0, cut, 0);
+                spawnSetup.Spaw();
             } while (i > spawnSetup.woods.Count);
 
             
