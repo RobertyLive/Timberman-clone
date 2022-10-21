@@ -194,6 +194,8 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
+        ui.panel.SetActive(true);
+        ui.SetInfor();
         InstantiarLapide();
         gameObject.SetActive(false);
         GetComponent<Player>().enabled = false;

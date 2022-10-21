@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace UISETUP
 {
     public class UISetup : MonoBehaviour
     {
         [Header("PANEL")]
         public GameObject panel;
+        public int bestScore;
+        public Text valueScore;
+        
+
 
         [Header("Setup for Barra")]
         public Image image;
@@ -47,6 +52,7 @@ namespace UISETUP
                 if(image.fillAmount < 0.01f)
                 {
                     panel.SetActive(true);
+                    SetInfor();
                     FindObjectOfType<Player>().Dead();
                     break;
                 }
@@ -67,6 +73,12 @@ namespace UISETUP
             image.color = colorBarra;
             image.fillAmount += 0.03f;
             image.color = beforeColor;
+        }
+
+        public void SetInfor()
+        {
+            valueScore.text = ui_text.text;
+
         }
     }
 

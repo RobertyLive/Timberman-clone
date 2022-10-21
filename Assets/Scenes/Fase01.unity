@@ -4217,6 +4217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 633452662}
+  bestScore: 0
+  valueScore: {fileID: 2040326845}
   image: {fileID: 640519307}
   time: 0
   cont: 0
