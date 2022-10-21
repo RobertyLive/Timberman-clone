@@ -12,6 +12,8 @@ public class Decrese : MonoBehaviour
 
     public SpawnSetup spawnSetup;
 
+
+    public bool isAdd=false;
     private void Start()
     {
         if (player == null)
@@ -23,15 +25,17 @@ public class Decrese : MonoBehaviour
     {
         if (!player.wasCut)
         {
-            Debug.Log("Descrese");
-
-            //transform.position -= new Vector3(0, cut, 0);
-            //FAZER FOREACH PARA DESCE UM POR UM
-            foreach (var a in spawnSetup.woods)
+            int i = 0;
+            do
             {
-                a.transform.position -= new Vector3(0, cut, 0);
-            }
+                spawnSetup.woods.Remove(player.obj);
+                transform.position -= new Vector3(0, cut, 0);
+            } while (i > spawnSetup.woods.Count);
+
+            
             player.wasCut = false;
         }
+
+
     }
 }

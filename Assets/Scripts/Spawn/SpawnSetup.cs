@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnSetup : MonoBehaviour
 {
-    public GameObject[] woods;
+    public List<GameObject> woods;
     public GameObject parent;
     private void Update()
     {

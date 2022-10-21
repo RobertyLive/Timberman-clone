@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     private Decrese m_decrese;
 
     public float timeToDecrese;
+
+    private float m_isAtack;
     private void Start()
     {
         m_decrese=GameObject.FindObjectOfType<Decrese>();
@@ -41,12 +43,15 @@ public class Player : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_scriptAtack = GetComponent<Atack>();
         //this.enabled = false; QUANDO INICIAR O GAME
+        m_spriteRenderer.flipX = true;
+        m_isAtack = ForceCut.x;
     }
 
 
     private void Update()
     {
-        circleRay = Physics2D.OverlapCircle(circle.position, radius, woods);
+        if (circleRay != false)
+            Circle();
 
         SetAnimationsPlayer();
 
@@ -59,6 +64,11 @@ public class Player : MonoBehaviour
         {
             ChangeCutNegative();  
         } 
+    }
+
+    private bool Circle()
+    {
+        return Physics2D.OverlapCircle(circle.position, radius, woods);
     }
 
     private void SetAnimationsPlayer()
@@ -96,7 +106,13 @@ public class Player : MonoBehaviour
         transform.position = new Vector2(-m_posX, transform.position.y);
         m_spriteRenderer.flipX = false;
         circle.localPosition = new Vector2(1.7f, -.25f);
-        ForceCut = new Vector2(-ForceCut.x, ForceCut.y);
+
+        do
+        {
+            ForceCut = new Vector2(-m_isAtack, ForceCut.y);
+
+        } while (m_spriteRenderer.flipX);
+        
     }
 
     public void ChangeCutNegative()
@@ -104,7 +120,12 @@ public class Player : MonoBehaviour
         transform.position = new Vector2(m_posX, transform.position.y);
         m_spriteRenderer.flipX = true;
         circle.localPosition = new Vector2(-1.7f, -.25f);
-        ForceCut = new Vector2(ForceCut.x, ForceCut.y);
+        do
+        {
+            ForceCut = new Vector2(m_isAtack, ForceCut.y);
+
+        } while (!m_spriteRenderer.flipX);
+
     }
     #endregion
 
@@ -115,7 +136,6 @@ public class Player : MonoBehaviour
         obj.GetComponent<Collider2D>().enabled = false;
         obj.GetComponent<Rigidbody2D>().AddForce(ForceCut);
         obj.GetComponent<Rigidbody2D>().gravityScale = 1;
-        //Destroy(obj, timeToDestroy); //n posso destruir
         Invoke("Decrese",timeToDecrese);
     }
     
