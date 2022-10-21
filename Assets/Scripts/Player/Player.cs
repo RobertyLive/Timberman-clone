@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
     public GameObject lapide;
     public Transform localLapide;
     public bool side;
+
+
     private void Start()
     {
         m_decrese=GameObject.FindObjectOfType<Decrese>();
@@ -47,7 +49,6 @@ public class Player : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_scriptAtack = GetComponent<Atack>();
-        //this.enabled = false; QUANDO INICIAR O GAME
         m_spriteRenderer.flipX = true;
         m_isAtack = ForceCut.x;
     }
@@ -62,7 +63,6 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //localLapide.position += Vector3.left;
             localLapide = GameObject.FindGameObjectWithTag("L2").transform;
             ChangeCutPositive();
         }
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
      
     private void CutTreeAnimation()
     {
-        if (!m_scriptAtack.isLineVerticalCut)//linhaUp for negativo
+        if (!m_scriptAtack.isLineVerticalCut)
         {
             obj = GetObj();
 
@@ -103,12 +103,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //LOGICA PARA FAZER O PLAYER MORRER
-            //CutTree();
-            //Line Ativada, ou seja, tem galho em cima
-            gameObject.SetActive(false);
-            GetComponent<Player>().enabled = false;
-            GetComponent<Atack>().enabled = false;
+            Dead();
             obj = GetObj();
             if(obj!=null)
                 CutTree();
@@ -124,12 +119,6 @@ public class Player : MonoBehaviour
     #region MUDANDO A POS DO CORTE
     public void ChangeCutPositive()
     {
-        //if (side)
-        //{
-        //    localLapide.position += Vector3.left*2;
-        //    side = false;
-        //}
-
         transform.position = new Vector2(-m_posX, transform.position.y);
         m_spriteRenderer.flipX = false;
         circle.localPosition = new Vector2(1.7f, -.25f);
@@ -181,5 +170,12 @@ public class Player : MonoBehaviour
     private void Decrese()
     {
         m_decrese.Decrescer();
+    }
+
+    private void Dead()
+    {
+        gameObject.SetActive(false);
+        GetComponent<Player>().enabled = false;
+        GetComponent<Atack>().enabled = false;
     }
 }
