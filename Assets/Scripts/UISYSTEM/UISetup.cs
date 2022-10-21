@@ -7,6 +7,9 @@ namespace UISETUP
 {
     public class UISetup : MonoBehaviour
     {
+        [Header("PANEL")]
+        public GameObject panel;
+
         [Header("Setup for Barra")]
         public Image image;
         public float time = 0;
@@ -16,6 +19,8 @@ namespace UISETUP
         public Text ui_text;
         private int som;
         public int reset = 0;
+
+        public bool isLoser;
         public void AddPoint(int i = 1)
         {
             som += 1;
@@ -41,7 +46,7 @@ namespace UISETUP
                 image.fillAmount -= 0.07f;
                 if(image.fillAmount < 0.01f)
                 {
-                    Debug.Log("Error menor");
+                    panel.SetActive(true);
                     FindObjectOfType<Player>().Dead();
                     break;
                 }
@@ -63,7 +68,6 @@ namespace UISETUP
             image.fillAmount += 0.03f;
             image.color = beforeColor;
         }
-
     }
 
     

@@ -49,3 +49,6 @@ TagManager:
   - name: Illustres
     uniqueID: 337161861
     locked: 0
+  - name: Restart
+    uniqueID: 1744749573
+    locked: 0
