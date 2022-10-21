@@ -12,7 +12,8 @@ public class Atack : MonoBehaviour
     [SerializeField] private LayerMask layerBrach;
 
 
-    public bool isLineOn;
+    public bool isLineVerticalCut;
+    //public bool isLineHorizontal;
 
     //float value;
 
@@ -22,16 +23,19 @@ public class Atack : MonoBehaviour
     }
     private void LineOnHead()
     {
-        isLineOn = Physics2D.Raycast(transform.position, Vector2.up, distanceUP, layerBrach);
+        isLineVerticalCut = Physics2D.Raycast(transform.position, Vector2.up, distanceUP, layerBrach);
     }
 
-
-
-
+    //Decidi fazer por Overlap
+    //private void LineOnVertical()
+    //{
+    //    isLineHorizontal = Physics2D.Raycast(transform.position, Vector2.up, distanceUP, layerBrach);
+    //}
 
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position, Vector2.up*distanceUP);
+        //Gizmos.DrawRay(transform.position, Vector2.left*distanceOtherSide);   
     }
 }

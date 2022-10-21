@@ -14,56 +14,119 @@ public class Player : MonoBehaviour
 
     public float radius;
     public LayerMask woods;
+    public GameObject obj;
+
+
+
+    [Header("Setup Circle")]
+    public Transform circle;
+
+    [Header("Força de Corte")]
+    public Vector2 ForceCut;
+
+    public float timeToDestroy;
+
+    public bool circleRay;
+
+    public bool wasCut;
+
+    private Decrese m_decrese;
+
+    public float timeToDecrese;
     private void Start()
     {
+        m_decrese=GameObject.FindObjectOfType<Decrese>();
         m_posX=transform.position.x;
         m_animator = GetComponent<Animator>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_scriptAtack = GetComponent<Atack>();
-        this.enabled = false;
+        //this.enabled = false; QUANDO INICIAR O GAME
     }
 
 
     private void Update()
     {
+        circleRay = Physics2D.OverlapCircle(circle.position, radius, woods);
+
         SetAnimationsPlayer();
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.position = new Vector2(-m_posX, transform.position.y);
-            m_spriteRenderer.flipX = false;
+            ChangeCutPositive();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            transform.position = new Vector2(m_posX, transform.position.y);
-            m_spriteRenderer.flipX = true;
-
-        }
+            ChangeCutNegative();  
+        } 
     }
 
     private void SetAnimationsPlayer()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) 
         {
             m_animator.SetTrigger(triggerToAttack);
             CutTreeAnimation();
         }
     }
 
-
+     
     private void CutTreeAnimation()
     {
-        if (!m_scriptAtack.isLineOn)//linha for negativo
+        if (!m_scriptAtack.isLineVerticalCut)//linhaUp for negativo
         {
-            bool a = Physics2D.OverlapCircle(transform.position, radius, woods);
-            Debug.Log(a);
+            obj  = Physics2D.OverlapCircle(circle.position, radius, woods).transform.gameObject;
+
+            if (obj != null)
+            {
+                CutTree();
+            }
+
+        }
+        else
+        {
+            //Line Ativada, ou seja, tem galho em cima
+            Debug.Log(m_scriptAtack.isLineVerticalCut);
         }
     }
 
+    #region MUDANDO A POS DO CORTE
+    public void ChangeCutPositive()
+    {
+        transform.position = new Vector2(-m_posX, transform.position.y);
+        m_spriteRenderer.flipX = false;
+        circle.localPosition = new Vector2(1.7f, -.25f);
+        ForceCut = new Vector2(-ForceCut.x, ForceCut.y);
+    }
+
+    public void ChangeCutNegative()
+    {
+        transform.position = new Vector2(m_posX, transform.position.y);
+        m_spriteRenderer.flipX = true;
+        circle.localPosition = new Vector2(-1.7f, -.25f);
+        ForceCut = new Vector2(ForceCut.x, ForceCut.y);
+    }
+    #endregion
+
+    public void CutTree()
+    {
+        obj.transform.SetParent(null);
+        obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        obj.GetComponent<Collider2D>().enabled = false;
+        obj.GetComponent<Rigidbody2D>().AddForce(ForceCut);
+        obj.GetComponent<Rigidbody2D>().gravityScale = 1;
+        //Destroy(obj, timeToDestroy); //n posso destruir
+        Invoke("Decrese",timeToDecrese);
+    }
+    
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(circle.position, radius);
+    }
+
+    private void Decrese()
+    {
+        m_decrese.Decrescer();
     }
 }
