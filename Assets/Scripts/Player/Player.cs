@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("KEYS")]
+    public string keyStr;
+
+
+
     public UISetup ui;
     private Atack m_scriptAtack;
     [SerializeField]private float m_posX;
@@ -127,7 +132,6 @@ public class Player : MonoBehaviour
             InstantiarLapide();
 
             GameOver();
-            Debug.Log(m_scriptAtack.isLineVerticalCut);
         }
     }
 

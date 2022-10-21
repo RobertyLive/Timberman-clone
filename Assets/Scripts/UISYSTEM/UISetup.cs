@@ -8,13 +8,13 @@ namespace UISETUP
 {
     public class UISetup : MonoBehaviour
     {
+        
+
         [Header("PANEL")]
         public GameObject panel;
         public int bestScore;
         public Text valueScore;
         
-
-
         [Header("Setup for Barra")]
         public Image image;
         public float time = 0;
@@ -26,6 +26,8 @@ namespace UISETUP
         public int reset = 0;
 
         public bool isLoser;
+
+        //FAZER SISTEMA DE DIFICULDADE
         public void AddPoint(int i = 1)
         {
             som += 1;
@@ -35,6 +37,7 @@ namespace UISETUP
         {
             ui_text.text = som.ToString();
             som = 0;
+            
         }
 
         public void GameOverReset()
@@ -46,9 +49,8 @@ namespace UISETUP
         {
             while (a.enabled != false && image.fillAmount > 0.01f && cont >= time)
             {
-                Debug.Log("Error");
                 time = cont + 1;
-                image.fillAmount -= 0.07f;
+                image.fillAmount -= 0.05f;
                 if(image.fillAmount < 0.01f)
                 {
                     panel.SetActive(true);
@@ -78,7 +80,6 @@ namespace UISETUP
         public void SetInfor()
         {
             valueScore.text = ui_text.text;
-
         }
     }
 
