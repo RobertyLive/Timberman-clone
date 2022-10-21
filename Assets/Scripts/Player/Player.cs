@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UISETUP;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public UISetup ui;
     private Atack m_scriptAtack;
     [SerializeField]private float m_posX;
 
@@ -41,7 +43,10 @@ public class Player : MonoBehaviour
     public Transform localLapide;
     public bool side;
 
-
+    private void Awake()
+    {
+        ui = GameObject.FindObjectOfType<UISetup>();
+    }
     private void Start()
     {
         m_decrese=GameObject.FindObjectOfType<Decrese>();
@@ -74,6 +79,14 @@ public class Player : MonoBehaviour
         } 
     }
 
+    private void LateUpdate()
+    {
+        //ui.Time(m_scriptAtack);
+        //ui.Timer(m_scriptAtack);
+        ui.Timer(m_scriptAtack);
+        
+    }
+
     private bool Circle()
     {
         return Physics2D.OverlapCircle(circle.position, radius, woods);
@@ -84,6 +97,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             m_animator.SetTrigger(triggerToAttack);
+            ui.AddPoint();
+            ui.AddEnergy();
             CutTreeAnimation();
         }
     }
@@ -109,11 +124,16 @@ public class Player : MonoBehaviour
                 CutTree();
 
 
-            Instantiate(lapide, localLapide.position, Quaternion.identity);
-            
-            
+            InstantiarLapide();
+
+            GameOver();
             Debug.Log(m_scriptAtack.isLineVerticalCut);
         }
+    }
+
+    public void InstantiarLapide()
+    {
+        Instantiate(lapide, localLapide.position, Quaternion.identity);
     }
 
     #region MUDANDO A POS DO CORTE
@@ -172,10 +192,16 @@ public class Player : MonoBehaviour
         m_decrese.Decrescer();
     }
 
-    private void Dead()
+    public void Dead()
     {
+        InstantiarLapide();
         gameObject.SetActive(false);
         GetComponent<Player>().enabled = false;
         GetComponent<Atack>().enabled = false;
+    }
+
+    private void GameOver()
+    {
+        ui.ResetPoint();
     }
 }
