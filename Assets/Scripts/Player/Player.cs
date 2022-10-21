@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
     public float timeToDecrese;
 
     private float m_isAtack;
+
+
+    public GameObject lapide;
+    public Transform localLapide;
+    public bool side;
     private void Start()
     {
         m_decrese=GameObject.FindObjectOfType<Decrese>();
@@ -57,11 +62,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
+            //localLapide.position += Vector3.left;
+            localLapide = GameObject.FindGameObjectWithTag("L2").transform;
             ChangeCutPositive();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
+            localLapide = GameObject.FindGameObjectWithTag("L1").transform;
             ChangeCutNegative();  
         } 
     }
@@ -85,7 +93,7 @@ public class Player : MonoBehaviour
     {
         if (!m_scriptAtack.isLineVerticalCut)//linhaUp for negativo
         {
-            obj  = Physics2D.OverlapCircle(circle.position, radius, woods).transform.gameObject;
+            obj = GetObj();
 
             if (obj != null)
             {
@@ -95,7 +103,20 @@ public class Player : MonoBehaviour
         }
         else
         {
+            //LOGICA PARA FAZER O PLAYER MORRER
+            //CutTree();
             //Line Ativada, ou seja, tem galho em cima
+            gameObject.SetActive(false);
+            GetComponent<Player>().enabled = false;
+            GetComponent<Atack>().enabled = false;
+            obj = GetObj();
+            if(obj!=null)
+                CutTree();
+
+
+            Instantiate(lapide, localLapide.position, Quaternion.identity);
+            
+            
             Debug.Log(m_scriptAtack.isLineVerticalCut);
         }
     }
@@ -103,6 +124,12 @@ public class Player : MonoBehaviour
     #region MUDANDO A POS DO CORTE
     public void ChangeCutPositive()
     {
+        //if (side)
+        //{
+        //    localLapide.position += Vector3.left*2;
+        //    side = false;
+        //}
+
         transform.position = new Vector2(-m_posX, transform.position.y);
         m_spriteRenderer.flipX = false;
         circle.localPosition = new Vector2(1.7f, -.25f);
@@ -115,8 +142,14 @@ public class Player : MonoBehaviour
         
     }
 
+    private GameObject GetObj()
+    {
+        return Physics2D.OverlapCircle(circle.position, radius, woods).transform.gameObject;
+    }
+
     public void ChangeCutNegative()
     {
+        side = false;
         transform.position = new Vector2(m_posX, transform.position.y);
         m_spriteRenderer.flipX = true;
         circle.localPosition = new Vector2(-1.7f, -.25f);
