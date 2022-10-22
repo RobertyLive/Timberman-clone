@@ -1563,7 +1563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.79460424, y: 0.84966326}
   m_AnchorMax: {x: 1, y: 0.96463156}
-  m_AnchoredPosition: {x: 19.5, y: 7}
+  m_AnchoredPosition: {x: 19.500015, y: 7}
   m_SizeDelta: {x: -235, y: -94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &339726704
@@ -2787,6 +2787,7 @@ MonoBehaviour:
   s_atack: {fileID: 1692763026}
   s_uiSetup: {fileID: 1181768391}
   s_player: {fileID: 1692763024}
+  desObj: {fileID: 0}
   start: {r: 0, g: 0, b: 0, a: 1}
   end: {r: 1, g: 1, b: 1, a: 1}
   text: {fileID: 1536564040}
@@ -3279,6 +3280,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &724035230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1812909033364342841, guid: 72145d517f210cd4cb7a538a02384778, type: 3}
+  m_PrefabInstance: {fileID: 1343350569}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &724035231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724035230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3478227b67ce1a4dadb84eec6cc1c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGame: 0
 --- !u!4 &739198744
 Transform:
   m_ObjectHideFlags: 0
@@ -5546,7 +5565,7 @@ GameObject:
   - component: {fileID: 1324618160}
   - component: {fileID: 1324618159}
   - component: {fileID: 1324618158}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Effects (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10903,7 +10922,7 @@ GameObject:
   - component: {fileID: 1507717423}
   - component: {fileID: 1507717422}
   - component: {fileID: 1507717421}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Effects (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17195,7 +17214,7 @@ GameObject:
   - component: {fileID: 1876119144}
   - component: {fileID: 1876119143}
   - component: {fileID: 1876119142}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
