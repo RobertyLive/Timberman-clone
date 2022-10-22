@@ -24,10 +24,16 @@ namespace UISETUP
         public Color colorBarra;
 
         public Text ui_text;
+        public GameObject ui_textObj;
         private int som;
         public int reset = 0;
 
         public bool isLoser;
+
+
+        public GameObject panelStart;
+        public MenuSystem menu;
+
 
         //FAZER SISTEMA DE DIFICULDADE
         public void AddPoint(int i = 1)
@@ -55,6 +61,7 @@ namespace UISETUP
                 image.fillAmount -= 0.05f;
                 if(image.fillAmount < 0.01f)
                 {
+                    
                     panel.SetActive(true);
                     SetInfor();
                     FindObjectOfType<Player>().Dead();
@@ -82,11 +89,18 @@ namespace UISETUP
         public void SetInfor()
         {
             valueScore.text = ui_text.text;
+            ui_textObj.SetActive(false);
         }
 
         public void RestartGame()
         {
             SceneManager.LoadScene(0);
+        }
+
+        public void StartGameButon()
+        {
+            panelStart.SetActive(false);
+            menu.OnStartGame();
         }
     }
 
