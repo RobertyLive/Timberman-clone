@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 
 namespace UISETUP
@@ -80,6 +82,11 @@ namespace UISETUP
         public void SetInfor()
         {
             valueScore.text = ui_text.text;
+        }
+
+        public void RestartGame()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 

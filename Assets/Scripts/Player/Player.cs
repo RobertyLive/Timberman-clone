@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UISETUP;
 using UnityEngine;
+using AudioMusic;
 
 public class Player : MonoBehaviour
 {
     [Header("KEYS")]
     public string keyStr;
-
-
 
     public UISetup ui;
     private Atack m_scriptAtack;
@@ -48,9 +47,11 @@ public class Player : MonoBehaviour
     public Transform localLapide;
     public bool side;
 
+    private AudioSetup m_audioSetup;
     private void Awake()
     {
         ui = GameObject.FindObjectOfType<UISetup>();
+        m_audioSetup = FindObjectOfType<AudioSetup>();
     }
     private void Start()
     {
@@ -104,6 +105,7 @@ public class Player : MonoBehaviour
             m_animator.SetTrigger(triggerToAttack);
             ui.AddPoint();
             ui.AddEnergy();
+            m_audioSetup.SwitchMusic(0);
             CutTreeAnimation();
         }
     }
@@ -198,16 +200,37 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
-        ui.panel.SetActive(true);
-        ui.SetInfor();
-        InstantiarLapide();
-        gameObject.SetActive(false);
-        GetComponent<Player>().enabled = false;
-        GetComponent<Atack>().enabled = false;
+        StartCoroutine(DeadBy());
     }
 
     private void GameOver()
     {
         ui.ResetPoint();
+    }
+
+    IEnumerator DeadBy()
+    {
+        yield return null;
+        EnabledObject();
+        m_spriteRenderer.enabled = false;
+        m_audioSetup.SwitchMusic(1);
+        InstantiarLapide();
+        StartCoroutine(ShowUI());
+        //gameObject.SetActive(false);
+
+    }
+    private IEnumerator ShowUI()
+    {
+        yield return new WaitForSeconds(2f);
+        ui.panel.SetActive(true);
+        m_audioSetup.SwitchMusic(2);
+        ui.SetInfor();
+    }
+
+
+    private void EnabledObject()
+    {
+        GetComponent<Atack>().enabled = false;
+        GetComponent<Player>().enabled = false;
     }
 }
