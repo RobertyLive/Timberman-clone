@@ -33,7 +33,11 @@ namespace UISETUP
 
         public GameObject panelStart;
         public MenuSystem menu;
+        public DificutySystem dificutySystem;
 
+        public float speedLife;
+
+        private int contador=1;
 
         //FAZER SISTEMA DE DIFICULDADE
         public void AddPoint(int i = 1)
@@ -58,15 +62,21 @@ namespace UISETUP
             while (a.enabled != false && image.fillAmount > 0.01f && cont >= time)
             {
                 time = cont + 1;
-                image.fillAmount -= 0.05f;
+                if (dificutySystem.i == contador)
+                {
+                    speedLife += 0.01f;
+                }
+                image.fillAmount -= speedLife;
+                
                 if(image.fillAmount < 0.01f)
                 {
-                    
                     panel.SetActive(true);
                     SetInfor();
                     FindObjectOfType<Player>().Dead();
                     break;
                 }
+
+
 
                 StartCoroutine(Timerr());
             }

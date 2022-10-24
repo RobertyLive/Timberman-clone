@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
     public bool side;
 
     private AudioSetup m_audioSetup;
+    public DificutySystem dificuty;
     private void Awake()
     {
         ui = GameObject.FindObjectOfType<UISetup>();
@@ -179,6 +180,10 @@ public class Player : MonoBehaviour
 
     public void CutTree()
     {
+        if (obj.transform.childCount>0)
+        {
+            obj.transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+        }
         obj.transform.SetParent(null);
         obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
         obj.GetComponent<Collider2D>().enabled = false;
@@ -211,12 +216,12 @@ public class Player : MonoBehaviour
     IEnumerator DeadBy()
     {
         yield return null;
+        dificuty.enabled = false;
         EnabledObject();
         m_spriteRenderer.enabled = false;
         m_audioSetup.SwitchMusic(1);
         InstantiarLapide();
         StartCoroutine(ShowUI());
-        //gameObject.SetActive(false);
 
     }
     private IEnumerator ShowUI()

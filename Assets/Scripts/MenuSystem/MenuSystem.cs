@@ -21,6 +21,7 @@ public class MenuSystem : MonoBehaviour
     public Atack s_atack;
     public UISetup s_uiSetup;
     public Player s_player;
+    public DificutySystem diff;
 
     [Header("CORES LERP")]
     public Color start;
@@ -41,6 +42,7 @@ public class MenuSystem : MonoBehaviour
             s_atack.enabled = false;
             s_uiSetup.enabled = false;
             s_player.enabled = false;
+            diff.enabled = false;
             text.SetActive(false);
         }
     }
@@ -62,7 +64,9 @@ public class MenuSystem : MonoBehaviour
         s_atack.enabled = true;
         s_uiSetup.enabled = true;
         s_player.enabled = true;
+        diff.enabled = true;
+
     }
-     
+
 
 }
